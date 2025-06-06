@@ -1,26 +1,27 @@
-import React from 'react';
-import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
+
 import { Layout, Menu, theme } from 'antd';
+import { Outlet } from 'react-router-dom';
+
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const items = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
+const items = ["Dashboard", "Profile", "User Management",].map(
     (icon, index) => ({
         key: String(index + 1),
-        icon: React.createElement(icon),
-        label: `nav ${index + 1}`,
+        // icon: createElement(icon),
+        label: `${icon}`,
     }),
 );
 
-const App: React.FC = () => {
+const MainLayout = () => {
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
 
     return (
-        <Layout>
+        <Layout style={{ height: '100vh', width: '98.5vw', margin: '0 auto', alignSelf: 'center' }}>
             <Sider
-                breakpoint="lg"
+                breakpoint="xxl"
                 collapsedWidth="0"
                 onBreakpoint={(broken) => {
                     console.log(broken);
@@ -29,10 +30,12 @@ const App: React.FC = () => {
                     console.log(collapsed, type);
                 }}
             >
-                <div className="demo-logo-vertical" />
+                <div className="demo-logo-vertical" style={{ textAlign: "center", alignItems: "center" }} >
+                    <h1 >UMS</h1>
+                </div>
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} items={items} />
             </Sider>
-            <Layout>
+            <Layout style={{ width: '100%', height: '100vh' }}>
                 <Header style={{ padding: 0, background: colorBgContainer }} />
                 <Content style={{ margin: '24px 16px 0' }}>
                     <div
@@ -41,9 +44,10 @@ const App: React.FC = () => {
                             minHeight: 360,
                             background: colorBgContainer,
                             borderRadius: borderRadiusLG,
+                            width: '100%',
                         }}
                     >
-                        content
+                        <Outlet />
                     </div>
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>
@@ -54,4 +58,4 @@ const App: React.FC = () => {
     );
 };
 
-export default App;
+export default MainLayout;
