@@ -1,17 +1,11 @@
 
 import { Layout, Menu, theme } from 'antd';
 import { Outlet } from 'react-router-dom';
+import { adminSidebarItems } from '../../routes/admin.routes';
 
 
 const { Header, Content, Footer, Sider } = Layout;
 
-const items = ["Dashboard", "Profile", "User Management",].map(
-    (icon, index) => ({
-        key: String(index + 1),
-        // icon: createElement(icon),
-        label: `${icon}`,
-    }),
-);
 
 const MainLayout = () => {
     const {
@@ -33,7 +27,7 @@ const MainLayout = () => {
                 <div className="demo-logo-vertical" style={{ textAlign: "center", alignItems: "center" }} >
                     <h1 >UMS</h1>
                 </div>
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} items={items} />
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} items={adminSidebarItems} />
             </Sider>
             <Layout style={{ width: '100%', height: '100vh' }}>
                 <Header style={{ padding: 0, background: colorBgContainer }} />
