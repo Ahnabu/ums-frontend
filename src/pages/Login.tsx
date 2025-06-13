@@ -1,100 +1,60 @@
-import { Form, Input, Button, Checkbox, Card, Typography } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
-const { Title } = Typography;
 
-interface Values {
-    username: string;
-    password: string;
-    remember: boolean;
-}
+import { Button } from 'antd';
+import { useForm, type FieldValues } from 'react-hook-form';
+import { useLoginMutation } from '../redux/features/auth/authApi';
+import { useAppDispatch } from '../redux/hooks';
+import { setUser, type TUser } from '../redux/features/auth/authSlice';
+import { verifyToken } from '../utils/verifyToken';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 const Login = () => {
-    const onFinish = (values: Values) => {
-        console.log("Received values of form: ", values);
-        // if (values.remember) {
-        //     localStorage.setItem("username", values.username);
-        //     localStorage.setItem("password", values.password);
-        // }
-    };
 
-    const handleForgotPassword = (e) => {
-        e.preventDefault();
-        console.log("Handle password recovery logic here");
-    };
+    const navigate = useNavigate()
+    const dispatch = useAppDispatch();
+    const { register, handleSubmit } = useForm({
+        defaultValues: {
+            userId: 'A-0002',
+            password: 'admin12345',
+        },
+    });
 
-    const handleRegister = (e) => {
-        e.preventDefault();
-        console.log("Handle registration logic here");
+    const [login] = useLoginMutation();
+
+    const onSubmit = async (data: FieldValues) => {
+        const toastId = toast.loading('Logging in...');
+
+        try {
+            const userInfo = {
+                id: data.userId,
+                password: data.password,
+            };
+
+            const res = await login(userInfo).unwrap();
+            const user = verifyToken(res.data.accessToken) as TUser;
+
+            dispatch(setUser({ user: user, token: res.data.accessToken }));
+            navigate(`/${user?.role}/dashboard`, { replace: true });
+            toast.success('Login successful!', { id: toastId });
+        } catch (err) {
+            console.error('Login failed:', err);
+            toast.error('Login failed. Please check your credentials.', { id: toastId });
+        }
+
     };
 
     return (
-        <div
-            style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100vh",
-            }}
-        >
-            <Card style={{ width: 500 }}>
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                    <Title level={2}>Company Logo </Title>
-                </div>
-                <Form
-                    name="normal_login"
-                    className="login-form"
-                    initialValues={{ remember: true }}
-                    onFinish={onFinish}
-                >
-                    <Form.Item
-                        name="username"
-                        rules={[{ required: true, message: "Please input your Username!" }]}
-                    >
-                        <Input
-                            prefix={<UserOutlined className="site-form-item-icon" />}
-                            placeholder="Username"
-                        />
-                    </Form.Item>
-                    <Form.Item
-                        name="password"
-                        rules={[{ required: true, message: "Please input your Password!" }]}
-                    >
-                        <Input
-                            prefix={<LockOutlined className="site-form-item-icon" />}
-                            type="password"
-                            placeholder="Password"
-                        />
-                        <a
-                            style={{ float: "right" }}
-                            className="login-form-forgot"
-                            href=""
-                            onClick={handleForgotPassword}
-                        >
-                            Forgot password
-                        </a>
-                    </Form.Item>
-                    <Form.Item>
-                        <Form.Item name="remember" valuePropName="checked" noStyle>
-                            <Checkbox>Remember me</Checkbox>
-                        </Form.Item>
-                    </Form.Item>
-                    <Form.Item>
-                        <Button
-                            type="primary"
-                            htmlType="submit"
-                            className="login-form-button"
-                            block
-                        >
-                            Log in
-                        </Button>
-                        Don't have an account{" "}
-                        <a href="" onClick={handleRegister}>
-                            sign up
-                        </a>
-                    </Form.Item>
-                </Form>
-            </Card>
-        </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <div>
+                <label htmlFor="id">ID: </label>
+                <input type="text" id="id" {...register('userId')} />
+            </div>
+            <div>
+                <label htmlFor="password">Password: </label>
+                <input type="text" id="password" {...register('password')} />
+            </div>
+            <Button htmlType="submit">Login</Button>
+        </form>
     );
 };
 
