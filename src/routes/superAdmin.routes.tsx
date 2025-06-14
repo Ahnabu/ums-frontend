@@ -6,7 +6,7 @@ import CreateStudent from "../pages/admin/CreateStudent";
 
 
 
-export const adminPaths = [
+export const superAdminPaths = [
     {
         name: 'Admin Dashboard',
         path: 'dashboard',
