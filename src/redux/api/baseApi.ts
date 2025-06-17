@@ -17,6 +17,10 @@ const baseQuery = fetchBaseQuery({
      
 const baseQueryWithRefreshToken: BaseQueryFn<FetchArgs, BaseQueryApi, unknown> = async (args, api, extraOptions): Promise<any> => {
     let result = await baseQuery(args, api, extraOptions);
+    if (result?.error && result.error.status === 404) {
+        console.error('API endpoint not found:', args.url);
+        return result; // Return the error as is
+    }
 
     if (result?.error?.status === 401) {
         //* Send Refresh

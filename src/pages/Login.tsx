@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button, Row } from 'antd';
 import type { FieldValues } from 'react-hook-form';
 import { useLoginMutation } from '../redux/features/auth/authApi';
@@ -6,7 +7,7 @@ import { type TUser, setUser } from '../redux/features/auth/authSlice';
 import { verifyToken } from '../utils/verifyToken';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import Form from '../components/form/Form';
+import CustomForm from '../components/form/Form';
 import FormInput from '../components/form/FormInput';
 
 const Login = () => {
@@ -47,11 +48,11 @@ const Login = () => {
 
     return (
         <Row justify="center" align="middle" style={{ height: '100vh' }}>
-            <Form onSubmit={onSubmit} defaultValues={defaultValues}>
+            <CustomForm onSubmit={onSubmit} defaultValues={defaultValues}>
                 <FormInput type="text" name="userId" label="ID:" />
                 <FormInput type="text" name="password" label="Password" />
                 <Button htmlType="submit">Login</Button>
-            </Form>
+            </CustomForm>
         </Row>
     );
 };
