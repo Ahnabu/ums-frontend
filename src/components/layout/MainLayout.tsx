@@ -21,7 +21,7 @@ const MainLayout = () => {
     } = theme.useToken();
 
     return (
-        <Layout style={{ height: '100vh', width: '98.5vw', margin: '0 auto', alignSelf: 'center' }}>
+        <Layout style={{ height: '100%', width: '98.5vw', margin: '0 auto', alignSelf: 'center' }}>
             <Sidebar />
             <Layout style={{ width: '100%', height: '100vh' }}>
                 <Header style={{ padding: 0, background: colorBgContainer }} >

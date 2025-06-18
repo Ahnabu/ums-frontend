@@ -42,9 +42,7 @@ const Sidebar = () => {
             onBreakpoint={(broken) => {
                 console.log(broken);
             }}
-            onCollapse={(collapsed, type) => {
-                console.log(collapsed, type);
-            }}
+            style={{ height: "100vh", position: "sticky", top: 0, left: 0, zIndex: 1000 }}
         >
             <div className="demo-logo-vertical" style={{ textAlign: "center", alignItems: "center" }} >
                 <h1 >UMS</h1>
