@@ -58,14 +58,17 @@ const CreateAcademicSemester = () => {
                     onSubmit={onSubmit}
                     resolver={zodResolver(academicSemesterSchema)}
                 >
-                    <CustomSelect label="Name" name="name" options={semesterOptions} />
-                    <CustomSelect label="Year" name="year" options={yearOptions} />
+                    <CustomSelect label="Name" name="name" placeholder='Please select a semester' options={semesterOptions} />
+                    <CustomSelect label="Year" name="year" placeholder='Please select a year' options={yearOptions} />
                     <CustomSelect
                         label="Start Month"
                         name="startMonth"
                         options={monthOptions}
+                        placeholder='Please select a start month'
                     />
-                    <CustomSelect label="End Month" name="endMonth" options={monthOptions} />
+                    <CustomSelect label="End Month" name="endMonth" options={monthOptions}
+                        placeholder='Please select a end month'
+                    />
 
                     <Button htmlType="submit">Submit</Button>
                 </CustomForm>

@@ -44,7 +44,7 @@ const CreateAcademicFaculty = () => {
                     onSubmit={onSubmit}
                     resolver={zodResolver(academicFacultySchema)}
                 >
-                    <FormInput type="text" name="name" label="Name of the Department" />
+                    <FormInput type="text" name="name" label="Name of the Faculty" placeholder="Name of the Faculty" />
 
                     <Button htmlType="submit">Submit</Button>
                 </CustomForm>

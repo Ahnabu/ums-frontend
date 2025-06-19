@@ -17,8 +17,12 @@ const AcademicDepartment = () => {
         isFetching,
     } = useGetAllAcademicDepartmentQuery(params);
 
-    const { data: semesterData } = useGetAllAcademicFacultyQuery(undefined);
+    const { data: facultyData } = useGetAllAcademicFacultyQuery(undefined);
 
+    const faculties = facultyData?.data?.map((item) => ({
+        text: item.name,
+        value: item._id,
+    }));
 
     const tableData = departmentData?.data?.map(
         ({ _id, name, academicFaculty, createdAt }) => ({
@@ -30,10 +34,7 @@ const AcademicDepartment = () => {
         })
     );
 
-    const faculties = semesterData?.data?.map((item) => ({
-        text: item.name,
-        value: item._id,
-    }));
+
     const columns: TableColumnsType<TTableData> = [
         {
             title: 'Name',

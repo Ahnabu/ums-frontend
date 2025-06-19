@@ -10,3 +10,8 @@ export const academicSemesterSchema = z.object({
 export const academicFacultySchema = z.object({
   name: z.string({ required_error: 'Please enter a Name' }).min(3, { message: 'Name must be at least 3 characters long' }),
 });
+
+export const academicDepartmentSchema = z.object({
+  name: z.string({ required_error: 'Please enter a Name' }).min(3, { message: 'Name must be at least 3 characters long' }),
+  academicFaculty: z.string({ required_error: 'Please select an Academic Faculty' }),
+});
