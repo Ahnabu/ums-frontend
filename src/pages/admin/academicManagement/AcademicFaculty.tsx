@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useGetAllFacultyQuery } from "../../../redux/features/admin/academicManagement.api";
+import { useGetAllAcademicFacultyQuery } from "../../../redux/features/admin/academicManagement.api";
 import type { TQueryParam } from "../../../types/global";
 import { Button, Table, type TableColumnsType, type TableProps } from "antd";
 import type { TAcademicFaculty } from "../../../types/academicManagement.type";
@@ -16,7 +16,7 @@ const AcademicFaculty = () => {
         data: semesterData,
         isLoading,
         isFetching,
-    } = useGetAllFacultyQuery(params);
+    } = useGetAllAcademicFacultyQuery(params);
 
     console.log({ isLoading, isFetching });
 
@@ -79,6 +79,7 @@ const AcademicFaculty = () => {
             );
 
             setParams(queryParams);
+
         }
     };
 
