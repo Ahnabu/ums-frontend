@@ -5,7 +5,8 @@ type TSelectProps = {
     label: string;
     name: string;
     placeholder?: string;
-    options: { value: string; label: string; disabled?: boolean }[];
+    options: { value: string; label: string; disabled?: boolean }[] | undefined;
+    disabled?: boolean;
 };
 
 const CustomSelect = ({ label, name, options, placeholder }: TSelectProps) => {
