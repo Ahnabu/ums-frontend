@@ -8,34 +8,32 @@ import {
 } from 'antd';
 import { useState } from 'react';
 
-import { useGetAllStudentsQuery } from '../../../redux/features/admin/userManagement.api';
+import { useGetAllAdminsQuery } from '../../../../redux/features/admin/userManagement.api';
 import { Link } from 'react-router-dom';
-import type { TStudent } from '../../../types/userManagement.types';
-import type { TQueryParam } from '../../../types/global';
+import type { TAdmin } from '../../../../types/userManagement.types';
+import type { TQueryParam } from '../../../../types/global';
 
 export type TTableData = Pick<
-    TStudent,
+    TAdmin,
     'fullName' | 'id' | 'email' | 'contactNo'
 >;
 
-const StudentData = () => {
+const AdminData = () => {
     const [params, setParams] = useState<TQueryParam[]>([]);
     const [page, setPage] = useState(1);
     const {
-        data: studentData,
-        isLoading,
+        data: adminData,
         isFetching,
-    } = useGetAllStudentsQuery([
+    } = useGetAllAdminsQuery([
         { name: 'page', value: page },
         { name: 'sort', value: 'id' },
         ...params,
     ]);
 
-    console.log({ isLoading, isFetching });
 
-    const metaData = studentData?.meta;
+    const metaData = adminData?.meta;
 
-    const tableData = studentData?.data?.map(
+    const tableData = adminData?.data?.map(
         ({ _id, fullName, id, email, contactNo }) => ({
             key: _id,
             fullName,
@@ -53,7 +51,7 @@ const StudentData = () => {
         },
 
         {
-            title: 'Roll No.',
+            title: 'ID No.',
             key: 'id',
             dataIndex: 'id',
         },
@@ -71,10 +69,9 @@ const StudentData = () => {
             title: 'Action',
             key: 'x',
             render: (item) => {
-                console.log(item);
                 return (
                     <Space>
-                        <Link to={`/admin/student-data/${item.key}`}>
+                        <Link to={`/admin/admin-data/${item.key}`}>
                             <Button>Details</Button>
                         </Link>
                         <Button>Update</Button>
@@ -126,4 +123,4 @@ const StudentData = () => {
     );
 };
 
-export default StudentData;
+export default AdminData;

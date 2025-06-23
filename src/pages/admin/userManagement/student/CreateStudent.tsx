@@ -5,13 +5,14 @@ import { Button, Col, Divider, Form, Input, Row } from 'antd';
 import {
     useGetAllAcademicDepartmentQuery,
     useGetAllSemestersQuery,
-} from '../../../redux/features/admin/academicManagement.api';
-import { useAddStudentMutation } from '../../../redux/features/admin/userManagement.api';
-import CustomForm from '../../../components/form/Form';
-import FormInput from '../../../components/form/FormInput';
-import CustomSelect from '../../../components/form/Select';
-import { bloodGroupOptions, genderOptions } from '../../../constants/global';
-import CustomDatePicker from '../../../components/form/DatePicker';
+} from '../../../../redux/features/admin/academicManagement.api';
+import { useAddStudentMutation } from '../../../../redux/features/admin/userManagement.api';
+import CustomForm from '../../../../components/form/Form';
+import FormInput from '../../../../components/form/FormInput';
+import CustomSelect from '../../../../components/form/Select';
+import { bloodGroupOptions, genderOptions } from '../../../../constants/global';
+import CustomDatePicker from '../../../../components/form/DatePicker';
+import { toast } from 'sonner';
 
 // const studentDummyData = {
 //   password: 'student123',
@@ -61,14 +62,11 @@ const studentDefaultValues = {
         lastName: 'Number 1',
     },
     gender: 'male',
-
-    bloogGroup: 'A+',
-
+    bloodGroup: 'A+',
     contactNo: '1235678',
     emergencyContactNo: '987-654-3210',
-    presentAddress: '123 Main St, Cityville',
+    presentAddress: '123 Main St, Citywide',
     permanentAddress: '456 Oak St, Townsville',
-
     guardian: {
         fatherName: 'James Doe',
         fatherOccupation: 'Engineer',
@@ -82,7 +80,7 @@ const studentDefaultValues = {
         name: 'Alice Johnson',
         occupation: 'Doctor',
         contactNo: '777-888-9999',
-        address: '789 Pine St, Villageton',
+        address: '789 Pine St, Village',
     },
 
     admissionSemester: '65bb60ebf71fdd1add63b1c0',
@@ -92,7 +90,12 @@ const studentDefaultValues = {
 const CreateStudent = () => {
     const [addStudent, { data, error }] = useAddStudentMutation();
 
-    console.log({ data, error });
+    if (data) {
+        toast.success('Student created successfully!');
+    }
+    if (error) {
+        toast.error('Failed to create student. Please try again.');
+    }
 
     const { data: sData, isLoading: sIsLoading } =
         useGetAllSemestersQuery(undefined);
@@ -119,13 +122,16 @@ const CreateStudent = () => {
         const formData = new FormData();
 
         formData.append('data', JSON.stringify(studentData));
-        formData.append('file', data.image);
+        formData.append('file', data?.image);
 
-        addStudent(formData);
+
 
         //! This is for development
         //! Just for checking
-        console.log(Object.fromEntries(formData));
+        // console.log(Object.fromEntries(formData));
+        // console.log("Student data being sent:", JSON.stringify(studentData, null, 2));
+
+        addStudent(formData);
     };
 
     return (
