@@ -1,5 +1,5 @@
 import { type TQueryParam, type TResponseRedux } from '../../../types/global';
-import type { TAdmin, TStudent } from '../../../types/userManagement.types';
+import type { TAdmin, TFaculty, TStudent } from '../../../types/userManagement.types';
 
 import { baseApi } from '../../api/baseApi';
 
@@ -105,12 +105,12 @@ const userManagementApi = baseApi.injectEndpoints({
         }
 
         return {
-          url: '/students',
+          url: '/faculties',
           method: 'GET',
           params: params,
         };
       },
-      transformResponse: (response: TResponseRedux<TStudent[]>) => {
+      transformResponse: (response: TResponseRedux<TFaculty[]>) => {
         return {
           data: response.data,
           meta: response.meta,
@@ -119,10 +119,10 @@ const userManagementApi = baseApi.injectEndpoints({
     }),
       getSingleFaculty: builder.query({
   query: (id) => ({
-    url: `/students/${id}`,
+    url: `/faculties/${id}`,
     method: 'GET',
         }),
-      transformResponse: (response: TResponseRedux<TStudent>) => {
+      transformResponse: (response: TResponseRedux<TFaculty>) => {
         return {
           data: response.data,
           meta: response.meta,
@@ -132,7 +132,7 @@ const userManagementApi = baseApi.injectEndpoints({
   
     addFaculty: builder.mutation({
       query: (data) => ({
-        url: '/users/create-student',
+        url: '/users/create-faculty',
         method: 'POST',
         body: data,
       }),

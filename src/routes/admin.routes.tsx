@@ -9,7 +9,9 @@ import AdminDashboard from "../pages/admin/AdminDashboard";
 import AdminData from "../pages/admin/userManagement/admin/AdminData";
 import AdminDetails from "../pages/admin/userManagement/admin/AdminDetails";
 import CreateAdmin from "../pages/admin/userManagement/admin/CreateAdmin";
-import CreateFaculty from "../pages/admin/userManagement/CreateFaculty";
+import CreateFaculty from "../pages/admin/userManagement/faculty/CreateFaculty";
+import FacultyData from "../pages/admin/userManagement/faculty/FacultyData";
+import FacultyDetails from "../pages/admin/userManagement/faculty/FacultyDetails";
 import CreateStudent from "../pages/admin/userManagement/student/CreateStudent";
 import StudentData from "../pages/admin/userManagement/student/StudentData";
 import StudentDetails from "../pages/admin/userManagement/student/StudentDetails";
@@ -79,7 +81,8 @@ export const adminPaths = [
                 name: 'Create Admin',
                 path: 'create-admin',
                 element: <CreateAdmin />,
-            }, {
+            },
+            {
                 name: 'Admins',
                 path: 'admin-data',
                 element: <AdminData />,
@@ -93,6 +96,15 @@ export const adminPaths = [
                 name: 'Create Faculty',
                 path: 'create-faculty',
                 element: <CreateFaculty />,
+            }, {
+                name: 'Faculties',
+                path: 'faculty-data',
+                element: <FacultyData />,
+            },
+            {
+
+                path: 'faculty-data/:facultyId',
+                element: <FacultyDetails />,
             },
 
 
