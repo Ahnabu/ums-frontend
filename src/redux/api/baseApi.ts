@@ -20,7 +20,11 @@ const baseQueryWithRefreshToken: BaseQueryFn<FetchArgs, BaseQueryApi, unknown> =
   let result = await baseQuery(args, api, extraOptions);
 
   if (result?.error?.status === 404) {
-    toast.error(result?.error.data.message);
+    const errorData = result?.error?.data;
+    const message = (typeof errorData === 'object' && errorData !== null && 'message' in errorData)
+      ? (errorData as { message?: string }).message
+      : 'An error occurred';
+    toast.error(message);
   }
   if (result?.error?.status === 401) {
     //* Send Refresh
@@ -54,7 +58,8 @@ const baseQueryWithRefreshToken: BaseQueryFn<FetchArgs, BaseQueryApi, unknown> =
 
 export const baseApi = createApi({
     reducerPath: 'baseApi',
-    baseQuery: baseQueryWithRefreshToken, 
+  baseQuery: baseQueryWithRefreshToken, 
+     tagTypes: ['semester', 'courses'],
     endpoints: () => ({
         
     })
