@@ -6,6 +6,10 @@ import CreateAcademicDepartment from "../pages/admin/academicManagement/CreateAc
 import CreateAcademicFaculty from "../pages/admin/academicManagement/CreateAcademicFaculty";
 import CreateAcademicSemester from "../pages/admin/academicManagement/CreateAcademicSemester";
 import AdminDashboard from "../pages/admin/AdminDashboard";
+import CreateCourse from "../pages/admin/courseManagement/CreateCourse";
+import OfferedCourse from "../pages/admin/courseManagement/OfferedCourse";
+import RegisteredSemesters from "../pages/admin/courseManagement/RegisteredSemesters";
+import SemesterRegistration from "../pages/admin/courseManagement/semesterRegistration";
 import AdminData from "../pages/admin/userManagement/admin/AdminData";
 import AdminDetails from "../pages/admin/userManagement/admin/AdminDetails";
 import CreateAdmin from "../pages/admin/userManagement/admin/CreateAdmin";
@@ -108,6 +112,41 @@ export const adminPaths = [
             },
 
 
+        ],
+    },
+    {
+        name: 'Course Management',
+        children: [
+            {
+                name: 'Semester Registration',
+                path: 'semester-registration',
+                element: <SemesterRegistration />,
+            },
+            {
+                name: 'Registered Semesters',
+                path: 'registered-semesters',
+                element: <RegisteredSemesters />,
+            },
+            {
+                name: 'Create Course',
+                path: 'create-course',
+                element: <CreateCourse />,
+            },
+            // {
+            //     name: 'Courses',
+            //     path: 'courses',
+            //     element: <Courses />,
+            // },
+            {
+                name: 'Offer Course',
+                path: 'offer-course',
+                element: <OfferedCourse />,
+            },
+            {
+                name: 'Offered Courses',
+                path: 'offered-courses',
+                element: <OfferedCourse />,
+            },
         ],
     },
 ];
