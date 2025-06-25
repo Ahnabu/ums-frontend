@@ -6,15 +6,18 @@ type TInputProps = {
     name: string;
     label?: string;
     placeholder?: string;
+    disabled?: boolean;
 };
-const FormInput = ({ type, name, label, placeholder }: TInputProps) => {
+const FormInput = ({ type, name, label, placeholder, disabled }: TInputProps) => {
     return (
         <div style={{ marginBottom: '20px' }}>
             <Controller
                 name={name}
                 render={({ field }) => (
                     <Form.Item label={label}>
-                        <Input {...field} type={type} id={name} size="large" placeholder={placeholder} />
+                        <Input {...field} type={type} id={name} size="large" placeholder={placeholder}
+                            disabled={disabled}
+                        />
                     </Form.Item>
                 )}
             />
