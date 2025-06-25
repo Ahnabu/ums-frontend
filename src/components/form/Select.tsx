@@ -7,9 +7,10 @@ type TSelectProps = {
     placeholder?: string;
     options: { value: string; label: string; disabled?: boolean }[] | undefined;
     disabled?: boolean;
+    mode?: 'multiple' | undefined;
 };
 
-const CustomSelect = ({ label, name, options, placeholder }: TSelectProps) => {
+const CustomSelect = ({ label, name, options, placeholder, mode }: TSelectProps) => {
     return (
         <Controller
             name={name}
@@ -20,6 +21,7 @@ const CustomSelect = ({ label, name, options, placeholder }: TSelectProps) => {
                         {...field}
                         options={options}
                         size="large"
+                        mode={mode}
                         placeholder={placeholder}
                     />
                     {error && <small style={{ color: 'red' }}>{error.message}</small>}
