@@ -71,7 +71,7 @@ const courseManagementApi = baseApi.injectEndpoints({
         }),
         addOfferedCourse: builder.mutation({
             query: (data) => ({
-                url: '/courses/create-offered-course',
+                url: '/offered-courses/create-offered-course',
                 method: 'POST',
                 body: data,
             }),

@@ -17,8 +17,6 @@ import { useGetAllCoursesQuery } from '../../../redux/features/admin/courseManag
 import { useGetAllFacultiesQuery } from '../../../redux/features/admin/userManagement.api';
 import { daysOptions } from '../../../constants/global';
 import CustomSelect from '../../../components/form/Select';
-import CustomDatePicker from '../../../components/form/DatePicker';
-
 
 const OfferCourse = () => {
     // State for controlling the form flow
@@ -95,14 +93,7 @@ const OfferCourse = () => {
 
             // Format the data for API submission according to backend requirements
             const offeredCourseData = {
-                // Include academicSemester from the selected semester registration
                 academicSemester: selectedSemester.academicSemester._id,
-                // Include these required fields from semester registration
-                status: selectedSemester.status,
-                startDate: selectedSemester.startDate,
-                endDate: selectedSemester.endDate,
-                minCredit: selectedSemester.minCredit,
-                maxCredit: selectedSemester.maxCredit,
 
                 // Include the form data
                 semesterRegistration: data.semesterRegistration,
@@ -110,12 +101,16 @@ const OfferCourse = () => {
                 academicDepartment: data.academicDepartment,
                 course: data.course,
                 faculty: data.faculty,
-                section: Number(data.section),
+
+                // Convert section to string - backend expects string not number
+                section: String(data.section),
+
                 maxCapacity: Number(data.maxCapacity),
                 days: data.days,
-                // Format time values properly
-                startTime: data.startTime.format ? data.startTime.format('HH:mm') : data.startTime,
-                endTime: data.endTime.format ? data.endTime.format('HH:mm') : data.endTime
+
+                // Format time values in "HH:MM" format
+                startTime: data.startTime || "09:00",
+                endTime: data.endTime || "10:30"
             };
 
             console.log("Offered Course Data:", offeredCourseData);
@@ -142,7 +137,7 @@ const OfferCourse = () => {
         academicFaculty: '',
         academicDepartment: '',
         course: '',
-        faculty: [], // Initialize as empty array for multiple selection
+        faculty: '',
         section: 1,
         maxCapacity: 30,
         days: [],
@@ -212,7 +207,7 @@ const OfferCourse = () => {
                             <CustomSelect
                                 label="Faculty"
                                 name="faculty"
-                                mode="multiple" // Enable multiple selection
+
                                 options={facultyOptions}
                                 disabled={isFacultiesLoading || !academicDepartmentId || !courseId}
                             />
@@ -255,20 +250,21 @@ const OfferCourse = () => {
 
                         {/* Start Time */}
                         <Col xs={24} md={12} lg={8}>
-                            <CustomDatePicker
-
+                            <FormInput
+                                type="time"
                                 name="startTime"
                                 label="Start Time"
-
+                                disabled={!courseId}
                             />
                         </Col>
 
                         {/* End Time */}
                         <Col xs={24} md={12} lg={8}>
-                            <CustomDatePicker
+                            <FormInput
+                                type="time"
                                 name="endTime"
                                 label="End Time"
-
+                                disabled={!courseId}
                             />
                         </Col>
                     </Row>
