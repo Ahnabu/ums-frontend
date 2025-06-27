@@ -3,11 +3,12 @@ import App from "../App";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
 import Login from "../pages/Login";
-import { routesGenerator } from "../utils/routesGenerator";
+import { routeGenerator } from "../utils/routesGenerator";
 import { adminPaths } from "./admin.routes";
 import { facultyPaths } from "./faculty.routes";
 import { studentPaths } from "./student.routes";
 import { superAdminPaths } from "./superAdmin.routes";
+import ProtectedRoute from "../components/layout/ProtectedRoute";
 
 
 const router = createBrowserRouter([
@@ -26,24 +27,36 @@ const router = createBrowserRouter([
         ]
     },
     {
-        path: "/admin",
-        element: <App />,
-        children: routesGenerator(adminPaths)
-    },
-    {
         path: "/superAdmin",
         element: <App />,
-        children: routesGenerator(superAdminPaths)
+        children: routeGenerator(superAdminPaths)
     },
     {
-        path: "/faculty",
-        element: <App />,
-        children: routesGenerator(facultyPaths)
+        path: '/admin',
+        element: (
+            <ProtectedRoute role="admin">
+                <App />
+            </ProtectedRoute>
+        ),
+        children: routeGenerator(adminPaths),
     },
     {
-        path: "/student",
-        element: <App />,
-        children: routesGenerator(studentPaths)
+        path: '/faculty',
+        element: (
+            <ProtectedRoute role="faculty">
+                <App />
+            </ProtectedRoute>
+        ),
+        children: routeGenerator(facultyPaths),
+    },
+    {
+        path: '/student',
+        element: (
+            <ProtectedRoute role="student">
+                <App />
+            </ProtectedRoute>
+        ),
+        children: routeGenerator(studentPaths),
     },
 
     {

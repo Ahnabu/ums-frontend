@@ -1,7 +1,9 @@
+import StudentDashboard from "../pages/student/StudentDashboard";
+
 export const studentPaths = [{
-    name: 'Admin Dashboard',
+    name: 'Student Dashboard',
     path: 'dashboard',
-    element: '',
+    element: <StudentDashboard />,
 
 },
 ]

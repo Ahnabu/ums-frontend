@@ -1,19 +1,33 @@
 import { type ReactNode } from 'react'
-import { useAppSelector } from '../../redux/hooks'
-import { useCurrentToken } from '../../redux/features/auth/authSlice'
-import { NavLink } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { logout, useCurrentToken, type TUser } from '../../redux/features/auth/authSlice'
+import { verifyToken } from '../../utils/verifyToken';
+import { Navigate } from 'react-router-dom';
+type TProtectedRoute = {
+    children: ReactNode;
+    role: string | undefined;
+};
 
-const ProtectedRoute = ({ children }: { children: ReactNode }) => {
-    const token = useAppSelector(useCurrentToken)
-    if (!token) {
-        // If no token is found, redirect to login or show an error
-        <NavLink to="/login" className="text-blue-500 hover:underline">
-            Please login to access this page
-        </NavLink>
-        return null // Prevent rendering of children
+const ProtectedRoute = ({ children, role }: TProtectedRoute) => {
+    const token = useAppSelector(useCurrentToken);
+
+    let user;
+
+    if (token) {
+        user = verifyToken(token);
     }
-    return children
 
-}
+    const dispatch = useAppDispatch();
+
+    if (role !== undefined && role !== (user as TUser)?.role) {
+        dispatch(logout());
+        return <Navigate to="/login" replace={true} />;
+    }
+    if (!token) {
+        return <Navigate to="/login" replace={true} />;
+    }
+
+    return children;
+};
 
 export default ProtectedRoute
