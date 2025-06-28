@@ -9,6 +9,7 @@ import { facultyPaths } from "./faculty.routes";
 import { studentPaths } from "./student.routes";
 import { superAdminPaths } from "./superAdmin.routes";
 import ProtectedRoute from "../components/layout/ProtectedRoute";
+import ChangePassword from "../pages/ChangePassword";
 
 
 const router = createBrowserRouter([
@@ -23,7 +24,10 @@ const router = createBrowserRouter([
             {
                 path: 'contact',
                 element: <Contact />
-            },
+            }, {
+                path: '/change-password',
+                element: <ChangePassword />
+            }
         ]
     },
     {

@@ -37,15 +37,20 @@ const Login = () => {
                 password: data.password,
             };
             const res = await login(userInfo).unwrap();
+
             const user = verifyToken(res.data.accessToken) as TUser;
             dispatch(setUser({ user: user, token: res.data.accessToken }));
             toast.success('Logged in', { id: toastId, duration: 2000 });
-            navigate(`/${user.role}/dashboard`);
+
+            if (res.data.needsPasswordChange) {
+                navigate(`/change-password`);
+            } else {
+                navigate(`/${user.role}/dashboard`);
+            }
         } catch (err) {
             toast.error('Something went wrong', { id: toastId, duration: 2000 });
         }
     };
-
     return (
         <Row justify="center" align="middle" style={{ height: '100vh' }}>
             <CustomForm onSubmit={onSubmit} defaultValues={defaultValues}>
